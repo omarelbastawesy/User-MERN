@@ -139,17 +139,17 @@ export default function UserPage({ params }: { params: any }) {
               <div className="grid gap-8 lg:grid-cols-[1fr_350px]">
                 <div className="flex flex-col sm:flex-row gap-6 items-center sm:items-start text-center sm:text-left">
                   <div className="relative h-[171px] w-[171px] shrink-0 overflow-hidden rounded-2xl border-2 border-white/10 bg-[#1b2129] shadow-inner">
-                    {user.avatar ? (
+                    {user.image !== "" ? (
                       <Image
-                        src={user.avatar}
+                        src={user.image}
                         alt={user.name}
                         fill
                         className="object-cover"
                       />
                     ) : (
-                      <div className="flex h-full w-full items-center justify-center bg-sky-500/10 text-sky-400">
-                        <BriefcaseBusiness size={40} />
-                      </div>
+                      <p className="text-2xl font-bold text-white">
+                        {user.name.charAt(0).toUpperCase()}
+                      </p>
                     )}
                   </div>
                   <div className="flex-1">
@@ -188,7 +188,9 @@ export default function UserPage({ params }: { params: any }) {
                       <Phone size={14} />
                       Phone Number
                     </div>
-                    <p className="text-sm font-medium text-gray-200">{user.phone}</p>
+                    <p className="text-sm font-medium text-gray-200">
+                      {user.phone}
+                    </p>
                   </div>
                 </div>
               </div>
