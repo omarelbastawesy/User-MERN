@@ -19,8 +19,17 @@ export const getUserById = async (id) => {
 
 export const newUser = async (userData) => {
   try {
-    const { name, description, email, role, phone, address, jobTitle, salary, image } =
-      userData;
+    const {
+      name,
+      description,
+      email,
+      role,
+      phone,
+      address,
+      jobTitle,
+      salary,
+      image,
+    } = userData;
 
     const isEmailExist = await User.find({ email });
     if (isEmailExist.length > 0) {
@@ -59,6 +68,7 @@ export const newUser = async (userData) => {
 export const updateUser = async (id, userData) => {
   try {
     const userId = id;
+
     const isUserExist = await User.findById(userId);
     if (!isUserExist) {
       const error = new Error("The user id is invalid.");
@@ -66,24 +76,37 @@ export const updateUser = async (id, userData) => {
       throw error;
     }
 
-    const email = userData.name;
-    const isEmail = await User.findOne({ email });
-    if (isEmail) {
-      const error = new Error("The user email is already exist.");
-      error.statusCode = 400;
-      throw error;
+    // check email
+    if (userData.email) {
+      const isEmail = await User.findOne({
+        email: userData.email,
+        _id: { $ne: userId }, // exclude current user
+      });
+
+      if (isEmail) {
+        const error = new Error("The user email is already exist.");
+        error.statusCode = 400;
+        throw error;
+      }
     }
 
-    const phone = userData.phone;
-    const isPhone = await User.findOne({ phone });
-    if (isPhone) {
-      const error = new Error("The user phone is already exist.");
-      error.statusCode = 400;
-      throw error;
+    // check phone
+    if (userData.phone) {
+      const isPhone = await User.findOne({
+        phone: userData.phone,
+        _id: { $ne: userId }, // exclude current user
+      });
+
+      if (isPhone) {
+        const error = new Error("The user phone is already exist.");
+        error.statusCode = 400;
+        throw error;
+      }
     }
 
     const user = await User.findByIdAndUpdate(userId, userData, {
       returnDocument: "after",
+      runValidators: true,
     });
 
     return user;
