@@ -87,7 +87,7 @@ export default function Card({ user }: any) {
 
           <div className="data mb-6">
             <div className="dis line-clamp-3 text-sm leading-6 text-gray-300">
-              {user.description}
+              {user.description.substring(0, 100) + "..."}
             </div>
           </div>
         </div>

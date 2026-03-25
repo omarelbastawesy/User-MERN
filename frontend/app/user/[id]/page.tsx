@@ -24,13 +24,14 @@ import Image from "next/image";
 import Popup from "@/app/_components/common/Pupup";
 
 const infoCardClassName =
-  "rounded-xl border border-white/10 bg-[#1b2129] p-4 shadow-md shadow-black/20";
+  "rounded-xl border border-white/10 bg-[#1b2129] p-4 shadow-md shadow-black/20 h-fit";
 
 export default function UserPage({ params }: { params: any }) {
   const userId = use(params as Promise<{ id: string }>);
   const { id } = userId;
   const router = useRouter();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [readMore, setReadMore] = useState(false);
 
   const { data: user, isLoading } = useUser(id);
 
@@ -166,13 +167,14 @@ export default function UserPage({ params }: { params: any }) {
                         {user.jobTitle}
                       </span>
                     </div>
-                    <p className="mt-4 max-w-2xl text-base leading-7 text-gray-300">
-                      {user.description}
+                    <p  className="whitespace-pre-wrap mt-4 max-w-2xl text-sm leading-7 text-gray-300 border-2 border-white/10 p-2 rounded-md">
+                      {readMore ? user.description : user.description.substring(0, 100) + "..."}
+                      <button onClick={() => setReadMore(!readMore)} className="text-sky-400 hover:text-sky-300 ml-2 cursor-pointer">{readMore ? "Read Less" : "Read More"}</button>
                     </p>
                   </div>
                 </div>
 
-                <div className="grid gap-4">
+                <div className="flex flex-col gap-4">
                   <div className={infoCardClassName}>
                     <div className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-sky-200/70">
                       <Mail size={14} />
