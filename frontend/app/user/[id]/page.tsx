@@ -148,8 +148,8 @@ export default function UserPage({ params }: { params: any }) {
                         className="object-cover"
                       />
                     ) : (
-                      <p className="text-2xl font-bold text-white">
-                        {user.name.charAt(0).toUpperCase()}
+                      <p className="text-5xl font-bold text-white flex items-center justify-center h-full w-full">
+                        {user?.name.charAt(0).toUpperCase()}
                       </p>
                     )}
                   </div>
@@ -167,9 +167,16 @@ export default function UserPage({ params }: { params: any }) {
                         {user.jobTitle}
                       </span>
                     </div>
-                    <p  className="whitespace-pre-wrap mt-4 max-w-2xl text-sm leading-7 text-gray-300 border-2 border-white/10 p-2 rounded-md">
-                      {readMore ? user.description : user.description.substring(0, 100) + "..."}
-                      <button onClick={() => setReadMore(!readMore)} className="text-sky-400 hover:text-sky-300 ml-2 cursor-pointer">{readMore ? "Read Less" : "Read More"}</button>
+                    <p className="whitespace-pre-wrap mt-4 max-w-2xl text-sm leading-7 text-gray-300 border-2 border-white/10 p-2 rounded-md">
+                      {readMore
+                        ? user.description
+                        : user.description.substring(0, 100) + "..."}
+                      <button
+                        onClick={() => setReadMore(!readMore)}
+                        className="text-sky-400 hover:text-sky-300 ml-2 cursor-pointer"
+                      >
+                        {readMore ? "Read Less" : "Read More"}
+                      </button>
                     </p>
                   </div>
                 </div>
